@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+  <h1>Mon profil</h1>
+  <p>Tu es bien sur la page profil.</p>
+
+  {# petit debug vite fait #}
+  {% if app.user %}
+    <p>Connecté en tant que : <strong>{{ app.user.userIdentifier }}</strong></p>
+  {% else %}
+    <p>Pas connecté.</p>
+    <a href="{{ path('app_login') }}">Se connecter</a>
+  {% endif %}
+</div>
+{% endblock %}
