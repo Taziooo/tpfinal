@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Dessine-moi un site{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen">
+
+    <nav class="bg-white shadow">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex flex-wrap gap-6 items-center">
+            <a class="font-semibold hover:underline" href="{{ path('app_home') }}">Accueil</a>
+
+            <span class="text-gray-300">|</span>
+
+            <a class="hover:underline" href="{{ path('app_qui_sommes_nous') }}">Qui sommes-nous</a>
+            <a class="hover:underline" href="{{ path('app_mentions_legales') }}">Mentions légales</a>
+            <a class="hover:underline" href="{{ path('app_cgu') }}">CGU</a>
+            <a class="hover:underline" href="{{ path('app_politique_confidentialite') }}">Confidentialité</a>
+            <a class="hover:underline" href="{{ path('app_cgv') }}">CGV</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 py-10">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded bg-white shadow border">
+                    <strong>{{ label|upper }}</strong> : {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {% block body %}{% endblock %}
+    </main>
+
+    {% block javascripts %}{% endblock %}
+</body>
+</html>
