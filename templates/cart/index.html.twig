@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}Panier — Goodies Shop{% endblock %}
+
+{% block body %}
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap">
+    <div>
+      <h1 class="h2">Panier</h1>
+      <div class="small">Panier stocké en session.</div>
+    </div>
+    <a class="btn" href="{{ path('app_shop_index') }}">← Continuer les achats</a>
+  </div>
+
+  <div style="height:14px"></div>
+
+  {% if items|length == 0 %}
+    <div class="card card-pad">
+      <div style="font-weight:800; font-size:18px">Panier vide</div>
+      <div class="muted" style="margin-top:6px">Ajoute un produit depuis la boutique.</div>
+      <div style="margin-top:14px">
+        <a class="btn btn-primary" href="{{ path('app_shop_index') }}">Aller à la boutique</a>
+      </div>
+    </div>
+  {% else %}
+    <div class="card">
+      {% for row in items %}
+        <div class="card-pad" style="display:flex; gap:14px; align-items:center; border-bottom:1px solid rgba(255,255,255,.10)">
+          <div style="flex:1">
+            <div style="font-weight:800">{{ row.product.name }}</div>
+            <div class="small">{{ row.product.priceEuros }} € / unité</div>
+          </div>
+
+          <form method="post" action="{{ path('app_cart_update', {id: row.product.id}) }}" style="display:flex; gap:10px; align-items:center">
+            <input class="input" style="width:90px" type="number" name="qty" min="0" value="{{ row.qty }}">
+            <button class="btn" type="submit">MAJ</button>
+          </form>
+
+          <div class="price" style="min-width:120px; text-align:right">
+            {{ (row.lineTotalCents / 100)|number_format(2, ',', ' ') }} €
+          </div>
+
+          <form method="post" action="{{ path('app_cart_remove', {id: row.product.id}) }}">
+            <button class="btn" type="submit">Supprimer</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div style="height:14px"></div>
+
+    <div class="card card-pad" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+      <div>
+        <div class="small">Total</div>
+        <div class="h2" style="margin:0">{{ (totalCents / 100)|number_format(2, ',', ' ') }} €</div>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <form method="post" action="{{ path('app_cart_clear') }}">
+          <button class="btn" type="submit">Vider</button>
+        </form>
+        <a class="btn btn-primary" href="{{ path('app_checkout') }}">Passer au checkout</a>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

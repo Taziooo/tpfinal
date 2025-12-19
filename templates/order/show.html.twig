@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}Commande #{{ order.id }}{% endblock %}
+
+{% block body %}
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap">
+    <div>
+      <h1 class="h2">Commande #{{ order.id }}</h1>
+      <div class="small">Statut : <strong>{{ order.status }}</strong></div>
+    </div>
+    <a class="btn" href="{{ path('app_shop_index') }}">← Retour boutique</a>
+  </div>
+
+  <div style="height:14px"></div>
+
+  <div class="card card-pad">
+    <div class="small">Total</div>
+    <div class="h2" style="margin:0">{{ order.totalEuros }} €</div>
+  </div>
+
+  <div style="height:14px"></div>
+
+  <div class="card">
+    {% for it in order.items %}
+      <div class="card-pad" style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid rgba(255,255,255,.10)">
+        <div>
+          <div style="font-weight:800">{{ it.product.name }}</div>
+          <div class="small">Quantité : {{ it.quantity }}</div>
+        </div>
+        <div class="price">{{ it.lineTotalEuros }} €</div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

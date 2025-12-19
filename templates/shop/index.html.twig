@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Boutique — Goodies Shop{% endblock %}
+
+{% block body %}
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap">
+    <div>
+      <h1 class="h2">Boutique</h1>
+      <div class="small">Sélection de produits fictifs (demo).</div>
+    </div>
+    <a class="btn" href="{{ path('app_cart_index') }}">Aller au panier →</a>
+  </div>
+
+  <div style="height:14px"></div>
+
+  <div class="grid grid-3">
+    {% for p in products %}
+      <div class="card card-pad">
+        <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start">
+          <div>
+            <div style="font-weight:800; font-size:18px">{{ p.name }}</div>
+            <div class="small">{{ p.createdAt|date('d/m/Y') }}</div>
+          </div>
+          <div class="price">{{ p.priceEuros }} €</div>
+        </div>
+
+        <div style="margin-top:10px" class="muted">
+          {{ p.description|slice(0, 110) }}{% if p.description|length > 110 %}…{% endif %}
+        </div>
+
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn" href="{{ path('app_shop_show', {id: p.id}) }}">Voir</a>
+          <form method="post" action="{{ path('app_cart_add', {id: p.id}) }}">
+            <input type="hidden" name="qty" value="1">
+            <button class="btn btn-primary" type="submit">Ajouter</button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <div class="card card-pad">
+        <div style="font-weight:800; font-size:18px">Aucun produit</div>
+        <div class="muted" style="margin-top:6px">
+          Ajoute des produits via fixtures ou via l’admin CRUD.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

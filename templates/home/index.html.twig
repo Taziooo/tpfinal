@@ -1,33 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>{% block title %}Dessine-moi un site{% endblock %}</title>
+{% extends 'base.html.twig' %}
+{% block title %}Accueil — Goodies Shop{% endblock %}
 
-  {% block stylesheets %}
-    <script src="https://cdn.tailwindcss.com"></script>
-  {% endblock %}
-</head>
-<body class="bg-gray-100 min-h-screen">
+{% block body %}
+  <div class="card card-pad">
+    <h1 class="h1">Mini e-commerce Symfony.</h1>
+    <p class="muted">Catalogue + panier + commande. Paiement simulé. Légal, simple, rendu propre.</p>
 
-<nav class="bg-white shadow">
-  <div class="max-w-5xl mx-auto px-6 py-4 flex gap-6">
-    <a class="font-semibold hover:underline" href="{{ path('app_home') }}">Accueil</a>
-    {# Les autres liens arrivent après création des routes #}
+    <div class="sep"></div>
+
+    <div class="kpi">
+      <div class="pill">✅ Auth</div>
+      <div class="pill">✅ CRUD Produits</div>
+      <div class="pill">✅ Panier session</div>
+      <div class="pill">✅ Checkout simulé</div>
+    </div>
+
+    <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+      <a class="btn btn-primary" href="{{ path('app_shop_index') }}">Voir la boutique</a>
+      <a class="btn" href="{{ path('app_cart_index') }}">Voir le panier</a>
+    </div>
   </div>
-</nav>
-
-<main class="max-w-5xl mx-auto px-6 py-10">
-  {% for label, messages in app.flashes %}
-    {% for message in messages %}
-      <div class="mb-4 p-4 rounded bg-white shadow">
-        <strong>{{ label|upper }}</strong> : {{ message }}
-      </div>
-    {% endfor %}
-  {% endfor %}
-
-  {% block body %}{% endblock %}
-</main>
-
-</body>
-</html>
+{% endblock %}
